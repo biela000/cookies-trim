@@ -2,6 +2,19 @@ doctype html
 html(lang='en', dir='ltr')
     head
         title= title
-        link(rel='stylesheet', href='/stylesheets/style.css')
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        meta(name='description', content='Express streaming service')
+        meta(name='keywords', content='express, streaming, service')
+        meta(name='author', content='Jakub Biela')
+        block styles
+            link(rel='stylesheet', href='/stylesheets/reset.css')
+            link(rel='stylesheet', href='/stylesheets/global.css')
+        block fonts
+            link(rel='preconnect', href='https://fonts.googleapis.com')
+            link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin)
+            link(href='https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap', rel='stylesheet')
     body
         block content
+        block scripts
+            script(src='/javascript/main.js')

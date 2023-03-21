@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import app from './app';
 
 // Catch every exception that is not tied to server's async process
 // (All exceptions that are not in server's functions like get, etc.)
@@ -10,6 +9,8 @@ process.on('uncaughtException', (error: Error) => {
 });
 
 dotenv.config({ path: './config.env' });
+
+import app from './app';
 
 // If mongoose.connect() fails, it will throw an error caught by the unhandledRejection handler
 const DB = process.env.DATABASE?.replace('<PASSWORD>', process.env.DATABASE_PASSWORD ?? '') ?? '';
