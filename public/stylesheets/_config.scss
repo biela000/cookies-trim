@@ -4,6 +4,7 @@ $coral: #ef8354ff;
 $raspberry-rose: #a53860ff;
 $isabelline: #fbf7f4ff;
 $raw-umber: #a1683aff;
+$asparagus: #60992dff;
 
 // Page color aliases
 $primary-accent: $coral;
@@ -12,6 +13,10 @@ $tertiary-accent: $raw-umber;
 $dark-accent: $rich-black;
 $background: $isabelline;
 $foreground: #131313ff;
+
+$error: $raspberry-rose;
+// Success should be a nice green color fitting with the theme
+$success: $asparagus;
 
 // Font
 $font-family: 'Roboto', sans-serif;

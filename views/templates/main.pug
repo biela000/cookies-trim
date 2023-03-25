@@ -16,6 +16,10 @@ html(lang='en', dir='ltr')
             link(href='https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap', rel='stylesheet')
     body
         .body-wrapper
+            .notification
+                h1.title
+                p.description
             block content
         block scripts
-            script(src='/javascript/main.js')
+            script(src='/javascript/main.js', type='module')
+            script(src='/javascript/notification.js', type='module')

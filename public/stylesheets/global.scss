@@ -11,4 +11,41 @@ html {
     padding: $small;
     display: flex;
     flex-direction: column;
+
+    .notification {
+        position: absolute;
+        width: max-content;
+        right: $small;
+        color: $background;
+        border-radius: $small;
+        padding: $medium;
+        transition: top 0.2s ease-in-out, opacity 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        opacity: 0;
+        pointer-events: none;
+        top: -$xlarge - $small;
+
+        &.show {
+            opacity: 1;
+            pointer-events: auto;
+            top: $small;
+        }
+
+        &.success {
+            background-color: $success;
+        }
+
+        &.error {
+            background-color: $error;
+        }
+
+        .title {
+            font-size: $medium;
+            font-weight: 500;
+        }
+
+        .description {
+            font-size: $small;
+            font-weight: 300;
+        }
+    }
 }

@@ -10,5 +10,36 @@ html {
   display: flex;
   flex-direction: column;
 }
+.body-wrapper .notification {
+  position: absolute;
+  width: max-content;
+  right: 1rem;
+  color: #fbf7f4;
+  border-radius: 1rem;
+  padding: 2rem;
+  transition: top 0.2s ease-in-out, opacity 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+  top: -5rem;
+}
+.body-wrapper .notification.show {
+  opacity: 1;
+  pointer-events: auto;
+  top: 1rem;
+}
+.body-wrapper .notification.success {
+  background-color: #60992d;
+}
+.body-wrapper .notification.error {
+  background-color: #a53860;
+}
+.body-wrapper .notification .title {
+  font-size: 2rem;
+  font-weight: 500;
+}
+.body-wrapper .notification .description {
+  font-size: 1rem;
+  font-weight: 300;
+}
 
 /*# sourceMappingURL=global.css.map */
