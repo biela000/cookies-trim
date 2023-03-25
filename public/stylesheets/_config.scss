@@ -23,3 +23,57 @@ $small: 1rem;
 $medium: 2rem;
 $large: 3rem;
 $xlarge: 4rem;
+
+
+// Mixins
+@mixin centered-column-flex {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+@mixin input {
+	width: 100%;
+	padding: $tiny;
+	border-radius: $tiny;
+	border: none;
+	font-size: $small;
+	font-weight: 300;
+	background-color: lighten($tertiary-accent, 30%);
+	color: $foreground;
+	text-align: center;
+	outline: none;
+	transition: background-color 0.2s ease-in-out;
+
+	&::placeholder {
+		font-style: italic;
+	}
+
+	&:focus {
+		background-color: lighten($tertiary-accent, 20%);
+
+		&::placeholder {
+			color: transparent;
+		}
+	}
+}
+
+@mixin button {
+	padding: $tiny;
+	border-radius: $tiny;
+	border: none;
+	font-size: $small;
+	font-weight: 300;
+	background-color: lighten($dark-accent, 10%);
+	color: $background;
+	padding: {
+		top: $tiny;
+		right: $small;
+		bottom: $tiny;
+		left: $small;
+	}
+	text-align: center;
+	outline: none;
+	transition: background-color 0.2s ease-in-out;
+	cursor: pointer;
+}

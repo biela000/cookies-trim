@@ -5,4 +5,10 @@ html {
   color: #131313;
 }
 
+.body-wrapper {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
 /*# sourceMappingURL=global.css.map */

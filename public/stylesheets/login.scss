@@ -1,0 +1,102 @@
+@use 'config' as *;
+
+.body-wrapper {
+	gap: $large;
+
+	.header {
+		background-color: $tertiary-accent;
+		color: $background;
+		padding: $medium $xlarge;
+		border-radius: $small;
+		width: max-content;
+		margin: auto;
+		line-height: 1.3;
+
+		.main-heading {
+			font-size: $large;
+			font-weight: 500;
+		}
+
+		.sub-heading {
+			font-size: $medium;
+			font-weight: 300;
+		}
+	}
+
+	.main {
+		width: max-content;
+		margin: auto;
+		background-color: $tertiary-accent;
+		color: $background;
+		border-radius: $small;
+		padding: $medium;
+
+		.login-form {
+			@include centered-column-flex;
+			gap: $small;
+
+			.profile-picture {
+				width: 90%;
+				border-radius: 50%;
+				border: lighten($dark-accent, 10%) solid calc($tiny / 2);
+			}
+
+			.input-container {
+				@include centered-column-flex;
+				gap: $tiny;
+
+				.input-label {
+					font-size: $small * 1.5;
+					font-weight: 300;
+				}
+
+				.input {
+					@include input;
+				}
+			}
+
+			.login-submit-btn {
+				@include button;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 760px) {
+	.body-wrapper {
+		.header {
+			padding: $medium $small;
+			width: 100%;
+
+			.main-heading {
+				font-size: $medium;
+				word-wrap: break-word;
+			}
+
+			.sub-heading {
+				font-size: $small;
+			}
+		}
+
+		.main {
+			padding: $medium $small;
+			width: fit-content;
+
+			.login-form {
+				.profile-picture {
+					width: 100%;
+				}
+
+				.input-container {
+					.input-label {
+						font-size: $small;
+					}
+
+					.input {
+						font-size: $small;
+					}
+				}
+			}
+		}
+	}
+}

@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 
-app.use('/users', userRouter);
+app.use('/api/v1/users', userRouter);
 app.use('/', viewRouter);
 
 // This handler will execute if no other route handler is executed

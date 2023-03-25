@@ -1,0 +1,117 @@
+.body-wrapper {
+  gap: 3rem;
+}
+.body-wrapper .header {
+  background-color: #a1683a;
+  color: #fbf7f4;
+  padding: 2rem 4rem;
+  border-radius: 1rem;
+  width: max-content;
+  margin: auto;
+  line-height: 1.3;
+}
+.body-wrapper .header .main-heading {
+  font-size: 3rem;
+  font-weight: 500;
+}
+.body-wrapper .header .sub-heading {
+  font-size: 2rem;
+  font-weight: 300;
+}
+.body-wrapper .main {
+  width: max-content;
+  margin: auto;
+  background-color: #a1683a;
+  color: #fbf7f4;
+  border-radius: 1rem;
+  padding: 2rem;
+}
+.body-wrapper .main .login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.body-wrapper .main .login-form .profile-picture {
+  width: 90%;
+  border-radius: 50%;
+  border: #1b3346 solid 0.25rem;
+}
+.body-wrapper .main .login-form .input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.body-wrapper .main .login-form .input-container .input-label {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+.body-wrapper .main .login-form .input-container .input {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-size: 1rem;
+  font-weight: 300;
+  background-color: #dab79a;
+  color: #131313;
+  text-align: center;
+  outline: none;
+  transition: background-color 0.2s ease-in-out;
+}
+.body-wrapper .main .login-form .input-container .input::placeholder {
+  font-style: italic;
+}
+.body-wrapper .main .login-form .input-container .input:focus {
+  background-color: #cd9c74;
+}
+.body-wrapper .main .login-form .input-container .input:focus::placeholder {
+  color: transparent;
+}
+.body-wrapper .main .login-form .login-submit-btn {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-size: 1rem;
+  font-weight: 300;
+  background-color: #1b3346;
+  color: #fbf7f4;
+  padding-top: 0.5rem;
+  padding-right: 1rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  text-align: center;
+  outline: none;
+  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 760px) {
+  .body-wrapper .header {
+    padding: 2rem 1rem;
+    width: 100%;
+  }
+  .body-wrapper .header .main-heading {
+    font-size: 2rem;
+    word-wrap: break-word;
+  }
+  .body-wrapper .header .sub-heading {
+    font-size: 1rem;
+  }
+  .body-wrapper .main {
+    padding: 2rem 1rem;
+    width: fit-content;
+  }
+  .body-wrapper .main .login-form .profile-picture {
+    width: 100%;
+  }
+  .body-wrapper .main .login-form .input-container .input-label {
+    font-size: 1rem;
+  }
+  .body-wrapper .main .login-form .input-container .input {
+    font-size: 1rem;
+  }
+}
+
+/*# sourceMappingURL=login.css.map */

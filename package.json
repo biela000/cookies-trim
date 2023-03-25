@@ -5,7 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "start": "node dist/server.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/server.js\""
+    "dev": "concurrently \"sass --watch public/stylesheets:public/stylesheets\" \"npx tsc --watch\" \"nodemon -q dist/server.js\""
   },
   "author": "Jakub Biela",
   "license": "ISC",

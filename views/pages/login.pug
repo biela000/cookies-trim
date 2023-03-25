@@ -1,17 +1,22 @@
 extends ../templates/main
 
-block content
-    .heading-container
-        h1.main-heading Welcome to CookiesTrim
-        h2.sub-heading Login to your account
-    form.login-form
-        mixin input-container(label, type, name, id)
-            .input-container
-                label(for=id)= label
-                input(type=type, name=name, id=id)&attributes(attributes)
-        +input-container('Username', 'text', 'username', 'username')(class='username-input')
-        +input-container('Password', 'password', 'password', 'password')(class='password-input')
-        button.login-submit-btn(type="submit") Login
+append styles
+    link(rel='stylesheet', href='/stylesheets/login.css')
 
-block scripts
+block content
+    header.header
+        h1.main-heading Welcome to CookiesTrim &#127850;
+        h2.sub-heading Login to your account
+    main.main
+        form.login-form
+            mixin input-container(label, type, name, id)
+                .input-container
+                    label.input-label(for=id)= label
+                    input.input(type=type, name=name, id=id)&attributes(attributes)
+            img.profile-picture(src="/media/images/monster-pfp.jpg", alt="cookie monster")
+            +input-container('Username', 'text', 'username', 'username')(class='username-input', placeholder='(name)')
+            +input-container('Password', 'password', 'password', 'password')(class='password-input', placeholder='(pass)')
+            button.login-submit-btn(type="submit") Login
+
+append scripts
     script(src="/javascript/login.js")
