@@ -1,5 +1,7 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
+import fs from 'fs';
 import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
 import path from 'path';
 import AppError from './utils/appError';
 import errorHandler from './utils/errorHandler';
@@ -16,6 +18,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/api/v1/users', userRouter);

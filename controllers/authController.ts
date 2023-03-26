@@ -44,10 +44,16 @@ export default {
 	}),
 	protect: catchAsync(async (req: Request, res: Response, next) => {
 		let token: string;
-		if (req.headers.authentication &&
+		const isTokenSentInHeader = req.headers.authentication &&
 			typeof req.headers.authentication === 'string' &&
-			req.headers.authentication.startsWith('Bearer')) {
-			token = req.headers.authentication.split(' ')[1];
+			req.headers.authentication.startsWith('Bearer');
+		const isTokenSentInCookie = req.cookies.jwt && typeof req.cookies.jwt === 'string';
+		if (isTokenSentInHeader || isTokenSentInCookie) {
+			if (isTokenSentInCookie) {
+				token = req.cookies.jwt;
+			} else {
+				token = (req.headers.authentication as string)!.split(' ')[1];
+			}
 			// validate token
 			const decoded: jwt.JwtPayload = jwt.verify(token, process.env.JWT_SECRET!) as jwt.JwtPayload;
 			// check if user still exists

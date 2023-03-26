@@ -1,0 +1,21 @@
+extends ../templates/layout
+
+append styles
+    link(rel='stylesheet', href='/stylesheets/music.css')
+
+block aside-menu
+    aside.aside-menu
+        nav.aside-menu-options
+            each option in options
+                li.aside-menu-item
+                    a.aside-menu-link(href= option.url) #{option.name}
+
+block main-section
+    section.main-section
+        h1.main-section-heading= sectionTitle
+        .main-section-content
+            each item in items
+                .main-section-item
+                    img.main-section-item-image(src=item.image, alt=item.title)
+                    h2.main-section-item-heading= item.title
+                    p.main-section-item-description= item.artist

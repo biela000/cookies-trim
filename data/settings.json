@@ -1,0 +1,7 @@
+{
+  "locations": {
+    "music": "/music",
+    "movies": "/movies",
+    "tv-shows": "/tv-shows"
+  }
+}

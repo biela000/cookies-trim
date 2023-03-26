@@ -1,0 +1,21 @@
+extends main
+
+append styles
+    link(rel='stylesheet', href='/stylesheets/layout.css')
+
+block content
+    header.header
+        .logo-container
+            h1.website-name CookiesTrim
+            img.logo(src="/media/images/cookie.png", alt="cookie")
+        nav.options
+            li.menu-item
+                a.menu-item-link(href="/music") Music
+            li.menu-item
+                a.menu-item-link(href="/movies") Movies
+            li.menu-item
+                a.menu-item-link(href="/tv-shows") TV Shows
+        img.settings(src="/media/images/settings.png", alt="settings")
+    main.main
+        block aside-menu
+        block main-section

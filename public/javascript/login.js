@@ -26,7 +26,7 @@ loginForm.addEventListener('submit', async (event) => {
 	});
 
 	if (response.status === 200) {
-		window.location.href = '/dashboard';
+		window.location.href = '/music';
 	} else if (response.status === 401) {
 		showNotification('Error', 'Invalid username or password', 'error');
 	} else {
