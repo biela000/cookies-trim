@@ -12,8 +12,32 @@ block aside-menu
 
 block main-section
     section.main-section
-        h1.main-section-heading= sectionTitle
-        .main-section-content
+        header.main-section-header
+            h1.main-section-title= sectionTitle
+            .main-section-options
+                .main-section-option-set.display-options
+                    button.main-section-option
+                        img.main-section-option-icon(src="/media/images/square-solid.svg", alt="picture")
+                    button.main-section-option
+                        img.main-section-option-icon(src="/media/images/list-solid.svg", alt="list")
+                .main-section-option-set.content-options
+                    button.main-section-option
+                        img.main-section-option-icon(src="/media/images/music-solid.svg", alt="songs")
+                    button.main-section-option
+                        img.main-section-option-icon(src="/media/images/album.png", alt="albums")
+                    button.main-section-option
+                        img.main-section-option-icon(src="/media/images/microphone-lines-solid.svg", alt="artists")
+                .main-section-option-set.sort-options
+                    select.sort-by-select(name="sort-by")
+                        option(value="plays") Plays
+                        option(value="title") Title
+                        option(value="artist") Artist
+                        option(value="album") Album
+                        option(value="date") Date
+                    select.sort-order-select(name="sort-order")
+                        option(value="descending") Descending
+                        option(value="ascending") Ascending
+        main.main-section-content
             each item in items
                 .main-section-item
                     img.main-section-item-image(src=item.image, alt=item.title)

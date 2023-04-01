@@ -9,7 +9,11 @@
 		padding: $medium $xlarge;
 		border-radius: $small;
 		width: max-content;
-		margin: auto;
+		margin: {
+			top: $small;
+			right: auto;
+			left: auto;
+		};
 		line-height: 1.3;
 
 		.main-heading {

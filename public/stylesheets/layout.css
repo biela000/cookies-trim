@@ -1,3 +1,36 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #a1683a;
+  padding: 1rem;
+  color: #fbf7f4;
+}
+.header .logo-container {
+  font-size: 3rem;
+  font-weight: 700;
+}
+.header .options {
+  display: flex;
+  justify-content: space-between;
+  width: max-content;
+  gap: 3rem;
+  list-style: none;
+}
+.header .options .menu-item .menu-item-link {
+  color: #fbf7f4;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+.header .settings {
+  width: 3rem;
+}
 
+.main {
+  padding: 2rem;
+  display: flex;
+  gap: 1rem;
+}
 
 /*# sourceMappingURL=layout.css.map */

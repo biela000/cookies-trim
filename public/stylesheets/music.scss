@@ -1,0 +1,96 @@
+@use 'config' as *;
+
+.aside-menu {
+	background-color: $tertiary-accent;
+	color: $background;
+	border-radius: $small;
+	padding: $small;
+	width: max-content;
+	display: flex;
+	flex-direction: column;
+	gap: $small;
+
+	.aside-menu-options {
+		.aside-menu-item {
+			display: flex;
+			align-items: center;
+			gap: $small;
+			padding: $tiny;
+			border-radius: $tiny;
+			transition: background-color 0.2s ease-in-out;
+			cursor: pointer;
+
+			&:hover {
+				background-color: lighten($tertiary-accent, 10%);
+			}
+
+			&.active {
+				background-color: lighten($tertiary-accent, 20%);
+			}
+
+			.menu-item-icon {
+				font-size: $medium;
+			}
+
+			.aside-menu-link {
+				font-weight: 300;
+				color: $background;
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+.main-section {
+	width: 100%;
+
+	.main-section-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.main-section-title {
+			font-size: $medium;
+			font-weight: 700;
+		}
+
+		.main-section-options {
+			display: flex;
+			gap: $xlarge;
+			align-items: center;
+
+			.main-section-option-set {
+				display: flex;
+				align-items: center;
+				gap: $tiny;
+				padding: $tiny;
+				border-radius: $tiny;
+				background-color: $tertiary-accent;
+				width: max-content;
+				height: $large;
+
+				.main-section-option {
+					background-color: transparent;
+					height: 100%;
+					display: grid;
+					place-items: center;
+					border: none;
+					width: $medium;
+
+					.main-section-option-icon {
+						width: 100%;
+						cursor: pointer;
+					}
+				}
+
+				.sort-by-select, .sort-order-select {
+					background-color: $tertiary-accent;
+					border: none;
+					height: $large;
+					color: $background;
+					font-size: $small;
+				}
+			}
+		}
+	}
+}
