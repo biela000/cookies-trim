@@ -1,5 +1,4 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
-import fs from 'fs';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import path from 'path';
@@ -7,6 +6,7 @@ import AppError from './utils/appError';
 import errorHandler from './utils/errorHandler';
 import userRouter from './routes/userRoutes';
 import viewRouter from './routes/viewRoutes';
+import songRouter from './routes/songRoutes';
 
 const app: Express = express();
 
@@ -22,6 +22,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/songs', songRouter);
 app.use('/', viewRouter);
 
 // This handler will execute if no other route handler is executed

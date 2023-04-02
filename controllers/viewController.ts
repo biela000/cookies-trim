@@ -7,6 +7,7 @@ export default {
 	}),
 
 	music: catchAsync(async (req: Request, res: Response) => {
+
 		res.status(200).render('pages/music', {
 			options: [
 				{
