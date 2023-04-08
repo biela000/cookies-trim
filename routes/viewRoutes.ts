@@ -5,8 +5,12 @@ import authController from '../controllers/authController';
 const router: Router = express.Router();
 
 router.get('/login', viewController.login);
+
 router.route('/music')
 	.all(authController.protect)
-	.get(viewController.music);
+	.get(viewController.musicHome);
+router.route('/music/songs/favorite')
+	.all(authController.protect)
+	.get(viewController.musicFavoriteSongs);
 
 export default router;

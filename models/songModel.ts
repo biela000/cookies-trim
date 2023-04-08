@@ -45,8 +45,8 @@ const Schema = new mongoose.Schema<SongDocument>({
 		default: 'Unknown',
 	},
 	cover: {
-		data: Buffer,
-		contentType: String,
+		type: mongoose.Schema.Types.Mixed, // TODO: Change to more specific object
+		default: null,
 	},
 	duration: {
 		type: Number,

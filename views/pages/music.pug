@@ -40,6 +40,9 @@ block main-section
         main.main-section-content
             each item in items
                 .main-section-item
-                    img.main-section-item-image(src=item.image, alt=item.title)
+                    img.main-section-item-image(
+                        src='data:image/jpeg;base64,' + item.cover[0].data.toString('base64'),
+                        alt=item.title
+                    )
                     h2.main-section-item-heading= item.title
                     p.main-section-item-description= item.artist

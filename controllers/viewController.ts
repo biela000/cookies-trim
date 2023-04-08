@@ -1,28 +1,32 @@
 import catchAsync from '../utils/catchAsync';
 import { Request, Response } from 'express';
+import Song from '../models/songModel';
+
+const musicMenuOptions: { name: string, url: string }[] = [
+	{
+		name: 'Favorite',
+		url: '/music/favorite',
+	}
+];
 
 export default {
 	login: catchAsync(async (req: Request, res: Response): Promise<void> => {
 		res.status(200).render('pages/login', { title: 'Login' });
 	}),
 
-	music: catchAsync(async (req: Request, res: Response): Promise<void> => {
-		// TODO: Get data from database and pass it to the view
+	musicFavoriteSongs: catchAsync(async (req: Request, res: Response): Promise<void> => {
+		// Get all songs that are marked as favorite
+		const favoriteSongs = await Song.find({ favorite: true });
+
 		res.status(200).render('pages/music', {
-			options: [
-				{
-					name: 'Favorite',
-					url: '/music/favorite',
-				}
-			],
-			sectionTitle: 'Music',
-			items: [
-				{
-					image: 'https://i.scdn.co/image/ab67616d0000b273b0b2b2b2b2b2b2b2b2b2b2b2',
-					title: 'SCARING THE HOES vol. 1',
-					artist: 'JPEGMAFIA, Danny Brown',
-				}
-			]
+			options: musicMenuOptions,
+			sectionTitle: 'Favorite Songs',
+			items: favoriteSongs,
 		});
+	}),
+
+	musicHome: catchAsync(async (req: Request, res: Response): Promise<void> => {
+		// Redirect to the favorite songs page
+		res.status(308).redirect('/music/songs/favorite');
 	}),
 };

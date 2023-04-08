@@ -1,6 +1,6 @@
 {
   "locations": {
-    "music": "/music",
+    "music": "/home/kuba/source/repos/cookies-trim/music",
     "movies": "/movies",
     "tv-shows": "/tv-shows"
   }
