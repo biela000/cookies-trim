@@ -2,12 +2,12 @@ import catchAsync from '../utils/catchAsync';
 import { Request, Response } from 'express';
 
 export default {
-	login: catchAsync(async (req: Request, res: Response) => {
+	login: catchAsync(async (req: Request, res: Response): Promise<void> => {
 		res.status(200).render('pages/login', { title: 'Login' });
 	}),
 
-	music: catchAsync(async (req: Request, res: Response) => {
-
+	music: catchAsync(async (req: Request, res: Response): Promise<void> => {
+		// TODO: Get data from database and pass it to the view
 		res.status(200).render('pages/music', {
 			options: [
 				{

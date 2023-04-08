@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import AppError from './appError';
 
-const handleDevelopmentErrors = (error: AppError, res: Response) => {
+const handleDevelopmentErrors = (error: AppError, res: Response): void => {
+	// Show the whole error to the programmer
 	res.status(error.statusCode).json({
 		status: error.status,
 		error: error,
@@ -10,7 +11,7 @@ const handleDevelopmentErrors = (error: AppError, res: Response) => {
 	});
 };
 
-const handleProductionErrors = (error: AppError, res: Response) => {
+const handleProductionErrors = (error: AppError, res: Response): void => {
 	// Operational, trusted error: send message to client
 	if (error.isOperational) {
 		res.status(error.statusCode).json({
@@ -29,7 +30,8 @@ const handleProductionErrors = (error: AppError, res: Response) => {
 	}
 };
 
-export default (error: AppError, req: Request, res: Response, next: NextFunction) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default (error: AppError, req: Request, res: Response, next: NextFunction): void => {
 	error.statusCode = error.statusCode || 500;
 	error.status = error.status || 'error';
 

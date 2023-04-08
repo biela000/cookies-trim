@@ -7,8 +7,10 @@ import AppError from '../utils/appError';
 import path from 'path';
 import {IAudioMetadata, parseFile} from 'music-metadata';
 
+// This function reads given song file's metadata and returns a SongDocument
 const createSongFromMetadata = async (fileDirectory: string, filename: string): Promise<SongDocument> => {
 	const fileMetadata: IAudioMetadata = await parseFile(path.join(fileDirectory, filename));
+
 	return new Song({
 		title: fileMetadata.common.title,
 		filename,
@@ -23,43 +25,73 @@ const createSongFromMetadata = async (fileDirectory: string, filename: string): 
 };
 
 export default {
-	updateAll: catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+	updateAll: catchAsync(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		// Get the path to the songs directory
+		const songDirectory: string = path.join(Settings.settings['locations']['music'], 'songs');
+
+		// If hard is true, all songs in the database will be deleted
+		// and all songs in the songs directory will be added to the database
 		const { hard } = req.query;
-		const isUpdateHard = hard === 'true';
-		// const songDirectory = path.join(Settings.settings['locations']['music'], 'songs');
-		const songDirectory = path.join(__dirname, '../../data/music/songs');
+		const isUpdateHard: boolean = hard === 'true';
 		if (isUpdateHard) {
+			// Delete all songs in the database
 			await Song.deleteMany({});
-			fs.readdir(songDirectory, async (err, filenames) => {
+
+			// Read all files in the songs directory
+			fs.readdir(songDirectory, async (err, filenames: string[]): Promise<void> => {
+				// If there is an error, return an error
 				if (err) {
 					next(new AppError('Error while reading directory!', 500));
 					return;
 				}
-				for (const filename of filenames) {
-					const song: SongDocument = await createSongFromMetadata(songDirectory, filename);
-					await Song.create(song);
-				}
+
+				// Create a SongDocument for each song in the songs directory
+				const songDocuments: Promise<SongDocument>[] =
+					filenames.map(async (filename: string): Promise<SongDocument> => {
+						return await createSongFromMetadata(songDirectory, filename);
+					});
+
+				// Insert all SongDocuments into the database
+				// Inserting all SongDocuments at once is much faster than inserting them one by one
+				const insertedSongs = await Song.insertMany(songDocuments);
+
+				// Return all songs in the database
 				res.status(200).json({
 					status: 'success',
 					data: {
-						songs: await Song.find({}),
+						songs: insertedSongs,
 					}
 				});
 			});
 		} else {
-			fs.readdir(songDirectory, async (err, filenames) => {
+			// If hard is false, only songs that are in the songs directory but not in the database
+			// will be added to the database and only songs that are in the database but not in the songs directory
+			// will be deleted from the database
+			fs.readdir(songDirectory, async (err, filenames: string[]): Promise<void> => {
+				// If there is an error, return an error
 				if (err) {
 					next(new AppError('Error while reading directory!', 500));
 					return;
 				}
+
+				// Get all songs in the database
 				const songs: SongDocument[] = await Song.find({});
-				const songsToDelete: SongDocument[] = songs.filter(song => {
+
+				// Get all songs that are in the database but not in the songs directory
+				const songsToDelete: SongDocument[] = songs.filter((song: SongDocument) => {
 					return !filenames.includes(song.filename);
 				});
-				const dbFilenames: string[] = songs.map(song => song.filename);
-				const songsToAdd: string[] = filenames.filter(filename => !dbFilenames.includes(filename));
-				Song.deleteMany({ filename: { $in: songsToDelete.map(song => song.filename) } });
-				await Song.create(songsToAdd.map(async (filename) =>  {
+
+				// Get filenames of all songs in the database
+				const dbFilenames: string[] = songs.map((song: SongDocument) => song.filename);
+				// Get all songs that are in the songs directory but not in the database
+				const songsToAdd: string[] = filenames.filter((filename: string) => !dbFilenames.includes(filename));
+
+				// Delete all songs that are in the database but not in the songs directory
+				Song.deleteMany({ filename: { $in: songsToDelete.map((song: SongDocument) => song.filename) } });
+
+				// Add all songs that are in the songs directory but not in the database
+				await Song.create(songsToAdd.map(async (filename: string): Promise<SongDocument> =>  {
 					return await createSongFromMetadata(songDirectory, filename);
 				}));
 				res.status(200).json({

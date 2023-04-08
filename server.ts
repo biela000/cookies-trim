@@ -10,6 +10,7 @@ process.on('uncaughtException', (error: Error) => {
 
 dotenv.config({ path: './config.env' });
 
+// Import app after dotenv.config() because app.ts uses environment variables
 import app from './app';
 
 // If mongoose.connect() fails, it will throw an error caught by the unhandledRejection handler

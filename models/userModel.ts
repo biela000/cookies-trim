@@ -32,22 +32,35 @@ const Schema = new mongoose.Schema<UserDocument>({
 	}
 });
 
-Schema.pre<UserDocument>('save', async function(next) {
+// Encrypt password before saving using mongoose middleware
+Schema.pre<UserDocument>('save', async function(next): Promise<void> {
+	// Only run this function if password was actually modified
 	if (!this.isModified('password')) return next();
+
+	// Hash the password and add salt of 12 characters
 	this.password = await bcrypt.hash(this.password, 12);
+	// Delete passwordConfirm field
 	this.passwordConfirm = undefined;
+
 	next();
 });
 
-Schema.methods.correctPassword = async function(candidatePassword: string, userPassword: string) {
+// Check if password is correct
+Schema.methods.correctPassword = async function(candidatePassword: string, userPassword: string): Promise<boolean> {
 	return await bcrypt.compare(candidatePassword, userPassword);
 };
 
-Schema.methods.changedPasswordAfter = function(JWTTimestamp: number) {
+// Check if password was changed after JWT token was issued
+Schema.methods.changedPasswordAfter = function(JWTTimestamp: number): boolean {
 	if (this.passwordChangedAt) {
-		const changedTimestamp = this.passwordChangedAt.getTime() / 1000;
+		// Convert passwordChangedAt to seconds
+		const changedTimestamp: number = this.passwordChangedAt.getTime() / 1000;
+		// If password was changed after JWT token was issued, return true
 		return JWTTimestamp < changedTimestamp;
 	}
+
+	// If passwordChangedAt is undefined, then password was not ever changed
+	// and therefore the password could not have been modified after the JWT token was issued
 	return false;
 };
 
