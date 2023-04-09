@@ -78,5 +78,44 @@
   color: #fbf7f4;
   font-size: 1rem;
 }
+.main-section .main-section-content {
+  padding-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.main-section .main-section-content .main-section-item {
+  line-height: 1.2;
+  color: #fbf7f4;
+  border-radius: 1rem;
+  padding: 1rem;
+  background-color: #a1683a;
+  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
+  position: relative;
+}
+.main-section .main-section-content .main-section-item:hover {
+  background-color: #bf814f;
+}
+.main-section .main-section-content .main-section-item:hover .main-section-item-favorite-icon {
+  display: block;
+}
+.main-section .main-section-content .main-section-item .main-section-item-heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.main-section .main-section-content .main-section-item .main-section-item-image {
+  width: 100%;
+  background-color: #a1683a;
+  border-radius: 1rem;
+  margin-bottom: 0.5rem;
+}
+.main-section .main-section-content .main-section-item .main-section-item-favorite-icon {
+  display: none;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 2rem;
+}
 
 /*# sourceMappingURL=music.css.map */

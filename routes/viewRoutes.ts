@@ -9,6 +9,11 @@ router.get('/login', viewController.login);
 router.route('/music')
 	.all(authController.protect)
 	.get(viewController.musicHome);
+
+router.route('/music/songs')
+	.all(authController.protect)
+	.get(viewController.musicAllSongs);
+
 router.route('/music/songs/favorite')
 	.all(authController.protect)
 	.get(viewController.musicFavoriteSongs);

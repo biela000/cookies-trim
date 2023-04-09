@@ -7,6 +7,10 @@ html {
     color: $foreground;
 }
 
+em {
+    font-style: italic;
+}
+
 .body-wrapper {
     display: flex;
     flex-direction: column;

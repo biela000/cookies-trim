@@ -36,6 +36,7 @@ export default {
 			}
 		});
 	}),
+
 	getOne: catchAsync(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const { id } = req.params;
 
@@ -55,6 +56,7 @@ export default {
 			}
 		});
 	}),
+
 	updateAll: catchAsync(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		// Get the path to the songs directory
 		const songDirectory: string = path.join(Settings.settings['locations']['music'], 'songs');
@@ -137,5 +139,31 @@ export default {
 				});
 			});
 		}
+	}),
+
+	toggleFavorite: catchAsync(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		const { songId } = req.params;
+
+		// Get the song with the given id from the database
+		const updatedSong: SongDocument | null = await Song.findById(songId);
+
+		// If there is no song with the given id, return an error
+		if (!updatedSong) {
+			next(new AppError('No song found with that ID', 404));
+			return;
+		}
+
+		// Toggle the favorite property of the song
+		updatedSong.favorite = !updatedSong.favorite;
+
+		// Save the updated song to the database
+		await Song.findByIdAndUpdate(songId, updatedSong);
+
+		res.status(200).json({
+			status: 'success',
+			data: {
+				song: updatedSong,
+			}
+		});
 	}),
 };

@@ -5,7 +5,11 @@ import Song from '../models/songModel';
 const musicMenuOptions: { name: string, url: string }[] = [
 	{
 		name: 'Favorite',
-		url: '/music/favorite',
+		url: '/music/songs/favorite',
+	},
+	{
+		name: 'All Songs',
+		url: '/music/songs',
 	}
 ];
 
@@ -22,6 +26,18 @@ export default {
 			options: musicMenuOptions,
 			sectionTitle: 'Favorite Songs',
 			items: favoriteSongs,
+		});
+	}),
+
+	musicAllSongs: catchAsync(async (req: Request, res: Response): Promise<void> => {
+		// TODO: Allow filtering and sorting results by query parameters
+		// Get all songs from the database
+		const allSongs = await Song.find({});
+
+		res.status(200).render('pages/music', {
+			options: musicMenuOptions,
+			sectionTitle: 'All Songs',
+			items: allSongs,
 		});
 	}),
 

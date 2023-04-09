@@ -93,4 +93,50 @@
 			}
 		}
 	}
+
+	.main-section-content {
+		padding-top: $small;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		gap: $small;
+
+		.main-section-item {
+			line-height: 1.2;
+			color: $background;
+			border-radius: $small;
+			padding: $small;
+			background-color: $tertiary-accent;
+			transition: background-color 0.2s ease-in-out;
+			cursor: pointer;
+			position: relative;
+
+			&:hover {
+				background-color: lighten($tertiary-accent, 10%);
+
+				.main-section-item-favorite-icon {
+					display: block;
+				}
+			}
+
+			.main-section-item-heading {
+				font-size: $small * 1.5;
+				font-weight: 700;
+			}
+
+			.main-section-item-image {
+				width: 100%;
+				background-color: $tertiary-accent;
+				border-radius: $small;
+				margin-bottom: $tiny;
+			}
+
+			.main-section-item-favorite-icon {
+				display: none;
+				position: absolute;
+				top: $small + $tiny;
+				right: $small + $tiny;
+				width: $medium;
+			}
+		}
+	}
 }
