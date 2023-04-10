@@ -6,6 +6,7 @@ import fs from 'fs';
 import AppError from '../utils/appError';
 import path from 'path';
 import {IAudioMetadata, parseFile} from 'music-metadata';
+import zlib from 'zlib';
 
 // This function reads given song file's metadata and returns a SongDocument
 const createSongFromMetadata = async (fileDirectory: string, filename: string): Promise<SongDocument> => {
@@ -142,10 +143,10 @@ export default {
 	}),
 
 	toggleFavorite: catchAsync(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-		const { songId } = req.params;
+		const { id } = req.params;
 
 		// Get the song with the given id from the database
-		const updatedSong: SongDocument | null = await Song.findById(songId);
+		const updatedSong: SongDocument | null = await Song.findById(id);
 
 		// If there is no song with the given id, return an error
 		if (!updatedSong) {
@@ -157,7 +158,7 @@ export default {
 		updatedSong.favorite = !updatedSong.favorite;
 
 		// Save the updated song to the database
-		await Song.findByIdAndUpdate(songId, updatedSong);
+		await Song.findByIdAndUpdate(id, updatedSong);
 
 		res.status(200).json({
 			status: 'success',
@@ -165,5 +166,49 @@ export default {
 				song: updatedSong,
 			}
 		});
+	}),
+
+	streamSong: catchAsync(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		// Extract the name and file from the request parameters
+		// These params need to be decoded because they are encoded in the url so song names with spaces work
+		const name: string = decodeURIComponent(req.params.name);
+		const file: string = decodeURIComponent(req.params.file);
+
+		// Get the path to the streams directory
+		const processedSongsDirectory: string = path.join(Settings.settings['locations']['music'], 'songs-ffmpeg-output');
+
+		// Get the path to the file
+		const filePath: string = path.join(processedSongsDirectory, name, file);
+
+		// Get file's extension
+		const extension: string = path.extname(file);
+
+		let stream: fs.ReadStream;
+
+		// If the file's extension is .m3u8, the file is a manifest file
+		// If the file's extension is .ts, the file is a segment file
+		switch (extension) {
+		case '.m3u8':
+			// If the file is a manifest file, set the content type to application/vnd.apple.mpegurl
+			res.setHeader('Content-Type', 'application/vnd.apple.mpegurl');
+
+			// Create a stream to the file with the 'utf-8' encoding
+			stream = fs.createReadStream(filePath, { encoding: 'utf-8' });
+			break;
+		case '.ts':
+			// If the file is a segment file, set the content type to video/MP2T
+			res.setHeader('Content-Type', 'video/MP2T');
+
+			// Create a stream to the file
+			stream = fs.createReadStream(filePath);
+			break;
+		default:
+			// If the file's extension is not .m3u8 or .ts, return an error
+			next(new AppError('Invalid file extension!', 400));
+			return;
+		}
+
+		// Pipe the stream to the response
+		stream.pipe(res);
 	}),
 };

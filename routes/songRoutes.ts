@@ -7,8 +7,12 @@ const router: Router = express.Router();
 // This needs to be protected later but for now it's fine
 router.route('/').patch(songController.updateAll);
 
-router.route('/favorite/:songId')
+router.route('/favorite/:id')
 	.all(authController.protect)
 	.put(songController.toggleFavorite);
+
+router.route('/stream/:name/:file')
+	.all(authController.protect)
+	.get(songController.streamSong);
 
 export default router;

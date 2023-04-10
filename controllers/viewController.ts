@@ -1,6 +1,9 @@
 import catchAsync from '../utils/catchAsync';
 import { Request, Response } from 'express';
-import Song from '../models/songModel';
+import Song, {SongDocument} from '../models/songModel';
+import Settings from '../Settings';
+import path from 'path';
+import ffmpeg from 'fluent-ffmpeg';
 
 const musicMenuOptions: { name: string, url: string }[] = [
 	{
@@ -39,6 +42,59 @@ export default {
 			sectionTitle: 'All Songs',
 			items: allSongs,
 		});
+	}),
+
+	musicOneSong: catchAsync(async (req: Request, res: Response): Promise<void> => {
+		// Set the ffmpeg output directory path and the song directory path
+		const ffmpegOutputDirectory = path.join(Settings.settings['locations']['music'], 'songs-ffmpeg-output');
+		const songDirectory = path.join(Settings.settings['locations']['music'], 'songs');
+
+		// Get the song id from the request parameters
+		const { id } = req.params;
+
+		// Get the song with the given id from the database
+		const song: SongDocument | null = await Song.findById(id);
+
+		// If there is no song with the given id, return an error
+		if (!song) {
+			// TODO: Render an error page
+			// res.status(404).render('pages/error', { title: 'Error', message: 'No song found with that ID' });
+			return;
+		}
+
+		// Get the song file path
+		const songFilePath: string = path.join(songDirectory, song.filename);
+
+		// Set the ffmpeg output file path
+		const ffmpegOutputFilePath: string = path.join(ffmpegOutputDirectory, `${song.filename}`, 'output.m3u8');
+		console.log(ffmpegOutputFilePath);
+
+		// Create a new ffmpeg instance
+		const ffmpegInstance: ffmpeg.FfmpegCommand = ffmpeg(songFilePath, { timeout: 432000 });
+
+		// Set the ffmpeg output file path
+		ffmpegInstance.output(ffmpegOutputFilePath);
+
+		// Set some ffmpeg options
+		ffmpegInstance.addOptions([
+			'-profile:v baseline',
+			'-level 3.0',
+			'-start_number 0',
+			'-hls_time 10',
+			'-hls_list_size 0',
+			'-f hls',
+		]);
+
+		ffmpegInstance.on('end', () => {
+			console.log('Finished processing');
+			res.status(200).json({
+				status: 'success',
+				message: 'Finished processing',
+			});
+		});
+
+		// Run the ffmpeg command
+		ffmpegInstance.run();
 	}),
 
 	musicHome: catchAsync(async (req: Request, res: Response): Promise<void> => {

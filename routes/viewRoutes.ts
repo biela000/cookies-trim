@@ -18,4 +18,8 @@ router.route('/music/songs/favorite')
 	.all(authController.protect)
 	.get(viewController.musicFavoriteSongs);
 
+router.route('/music/songs/:id')
+	.all(authController.protect)
+	.get(viewController.musicOneSong);
+
 export default router;
