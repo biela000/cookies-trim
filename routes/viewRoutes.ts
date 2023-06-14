@@ -7,19 +7,19 @@ const router: Router = express.Router();
 router.get('/login', viewController.login);
 
 router.route('/music')
-	.all(authController.protect)
-	.get(viewController.musicHome);
+    .all(authController.protect)
+    .get(viewController.musicHome);
 
 router.route('/music/songs')
-	.all(authController.protect)
-	.get(viewController.musicAllSongs);
+    .all(authController.protect)
+    .get(viewController.musicAllSongs);
 
 router.route('/music/songs/favorite')
-	.all(authController.protect)
-	.get(viewController.musicFavoriteSongs);
+    .all(authController.protect)
+    .get(viewController.musicFavoriteSongs);
 
 router.route('/music/songs/:id')
-	.all(authController.protect)
-	.get(viewController.musicOneSong);
+    .all(authController.protect)
+    .get(viewController.musicOneSong);
 
 export default router;

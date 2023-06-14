@@ -14,7 +14,7 @@ dotenv.config({ path: './config.env' });
 import app from './app';
 
 // If mongoose.connect() fails, it will throw an error caught by the unhandledRejection handler
-const DB = process.env.DATABASE_ONLINE?.replace('<password>', process.env.DATABASE_PASSWORD ?? '') ?? '';
+const DB = process.env.DATABASE?.replace('<password>', process.env.DATABASE_PASSWORD ?? '') ?? '';
 mongoose.connect(DB).then(() => {
 	console.log('DB connection successful!');
 });

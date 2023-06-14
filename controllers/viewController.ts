@@ -1,104 +1,97 @@
 import catchAsync from '../utils/catchAsync';
 import { Request, Response } from 'express';
-import Song, {SongDocument} from '../models/songModel';
+import Song, { SongDocument } from '../models/songModel';
 import Settings from '../Settings';
 import path from 'path';
 import ffmpeg from 'fluent-ffmpeg';
+import SongUtils from '../utils/songUtils';
 
 const musicMenuOptions: { name: string, url: string }[] = [
-	{
-		name: 'Favorite',
-		url: '/music/songs/favorite',
-	},
-	{
-		name: 'All Songs',
-		url: '/music/songs',
-	}
+    {
+        name: 'Favorite',
+        url: '/music/songs/favorite',
+    },
+    {
+        name: 'All Songs',
+        url: '/music/songs',
+    }
 ];
 
 export default {
-	login: catchAsync(async (req: Request, res: Response): Promise<void> => {
-		res.status(200).render('pages/login', { title: 'Login' });
-	}),
+    login: catchAsync(async (req: Request, res: Response): Promise<void> => {
+        res.status(200).render('pages/login', { title: 'Login' });
+    }),
 
-	musicFavoriteSongs: catchAsync(async (req: Request, res: Response): Promise<void> => {
-		// Get all songs that are marked as favorite
-		const favoriteSongs = await Song.find({ favorite: true });
+    musicFavoriteSongs: catchAsync(async (req: Request, res: Response): Promise<void> => {
+        // Get all songs that are marked as favorite
+        const favoriteSongs = await Song.find({ favorite: true });
 
-		res.status(200).render('pages/music', {
-			options: musicMenuOptions,
-			sectionTitle: 'Favorite Songs',
-			items: favoriteSongs,
-		});
-	}),
+        res.status(200).render('pages/music', {
+            options: musicMenuOptions,
+            sectionTitle: 'Favorite Songs',
+            items: favoriteSongs,
+        });
+    }),
 
-	musicAllSongs: catchAsync(async (req: Request, res: Response): Promise<void> => {
-		// TODO: Allow filtering and sorting results by query parameters
-		// Get all songs from the database
-		const allSongs = await Song.find({});
+    musicAllSongs: catchAsync(async (req: Request, res: Response): Promise<void> => {
+        // TODO: Allow filtering and sorting results by query parameters
+        // Get all songs from the database
+        const allSongs = await Song.find({});
 
-		res.status(200).render('pages/music', {
-			options: musicMenuOptions,
-			sectionTitle: 'All Songs',
-			items: allSongs,
-		});
-	}),
+        res.status(200).render('pages/music', {
+            options: musicMenuOptions,
+            sectionTitle: 'All Songs',
+            items: allSongs,
+        });
+    }),
 
-	musicOneSong: catchAsync(async (req: Request, res: Response): Promise<void> => {
-		// Set the ffmpeg output directory path and the song directory path
-		const ffmpegOutputDirectory = path.join(Settings.settings['locations']['music'], 'songs-ffmpeg-output');
-		const songDirectory = path.join(Settings.settings['locations']['music'], 'songs');
+    musicOneSong: catchAsync(async (req: Request, res: Response): Promise<void> => {
+        // Set the ffmpeg output directory path and the song directory path
+        const ffmpegOutputDirectory = path.join(Settings.settings['locations']['music'], 'songs-ffmpeg-output');
+        const songDirectory = path.join(Settings.settings['locations']['music'], 'songs');
 
-		// Get the song id from the request parameters
-		const { id } = req.params;
+        // Get the song id from the request parameters
+        const { id } = req.params;
 
-		// Get the song with the given id from the database
-		const song: SongDocument | null = await Song.findById(id);
+        // Get the song with the given id from the database
+        const song: SongDocument | null = await Song.findById(id);
 
-		// If there is no song with the given id, return an error
-		if (!song) {
-			// TODO: Render an error page
-			// res.status(404).render('pages/error', { title: 'Error', message: 'No song found with that ID' });
-			return;
-		}
+        // If there is no song with the given id, return an error
+        if (!song) {
+            // TODO: Render an error page
+            // res.status(404).render('pages/error', { title: 'Error', message: 'No song found with that ID' });
+            return;
+        }
 
-		// Get the song file path
-		const songFilePath: string = path.join(songDirectory, song.filename);
+        // Convert the song to HLS stream
+        const ffmpegInstance: ffmpeg.FfmpegCommand | null =
+            await SongUtils.convertSongToHlsStream(
+                song,
+                ffmpegOutputDirectory,
+                songDirectory
+            );
 
-		// Set the ffmpeg output file path
-		const ffmpegOutputFilePath: string = path.join(ffmpegOutputDirectory, `${song.filename}`, 'output.m3u8');
-		console.log(ffmpegOutputFilePath);
+        const renderSongPage = (): void => {
+            res.status(200).render('pages/song', {
+                song,
+                options: musicMenuOptions,
+            });
+        };
 
-		// Create a new ffmpeg instance
-		const ffmpegInstance: ffmpeg.FfmpegCommand = ffmpeg(songFilePath, { timeout: 432000 });
+        // If the ffmpeg instance is null, the song has already been converted to HLS stream
+        if (!ffmpegInstance) {
+            return renderSongPage();
+        }
 
-		// Set the ffmpeg output file path
-		ffmpegInstance.output(ffmpegOutputFilePath);
+        // If the ffmpeg instance is not null, the song is being converted to HLS stream
+        ffmpegInstance.on('end', () => {
+            console.log('Finished processing');
+            renderSongPage();
+        });
+    }),
 
-		// Set some ffmpeg options
-		ffmpegInstance.addOptions([
-			'-profile:v baseline',
-			'-level 3.0',
-			'-start_number 0',
-			'-hls_time 10',
-			'-hls_list_size 0',
-			'-f hls',
-		]);
-
-		ffmpegInstance.on('end', () => {
-			console.log('Finished processing');
-			res.status(200).json({
-				status: 'success',
-				message: 'Finished processing',
-			});
-		});
-
-		// Run the ffmpeg command
-		ffmpegInstance.run();
-	}),
-
-	musicHome: catchAsync(async (req: Request, res: Response): Promise<void> => {
-		// Redirect to the favorite songs page
-		res.status(308).redirect('/music/songs/favorite');
-	}),
+    musicHome: catchAsync(async (req: Request, res: Response): Promise<void> => {
+        // Redirect to the favorite songs page
+        res.status(308).redirect('/music/songs/favorite');
+    }),
 };
