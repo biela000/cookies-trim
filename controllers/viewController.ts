@@ -3,8 +3,6 @@ import { Request, Response } from 'express';
 import Song, { SongDocument } from '../models/songModel';
 import Settings from '../Settings';
 import path from 'path';
-import ffmpeg from 'fluent-ffmpeg';
-import SongUtils from '../utils/songUtils';
 
 const musicMenuOptions: { name: string, url: string }[] = [
     {
@@ -60,8 +58,17 @@ export default { login: catchAsync(async (req: Request, res: Response): Promise<
             return;
         }
 
+        let songCoverBase64 = '';
+        if (song.cover && song.cover.length > 0 && song.cover[0].data) {
+            songCoverBase64 = 'data:image/jpeg;base64,' + song.cover[0].data.toString('base64');
+        }
+
         res.status(200).render('pages/song', {
-            song,
+            sectionTitle: song.title,
+            cover: songCoverBase64,
+            title: song.title,
+            artist: song.artist,
+            songname: encodeURIComponent(song.filename),
             ffmpegOutputDirectory,
             songDirectory,
         });

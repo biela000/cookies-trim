@@ -1,0 +1,19 @@
+extends ../templates/layout
+
+append styles
+    link(rel='stylesheet', href='/stylesheets/song.css')
+
+block main-section
+    section.main-section
+        header.main-section-header
+            h1.main-section-title= sectionTitle
+            main.main-section-content
+                img.song-cover(src=cover)
+                section.song-info
+                    h2.song-title= title
+                    h3.song-artist= artist
+                audio.song-audio(controls data-filename=songname)
+append scripts
+    script(src="/javascript/hls.min.js")
+    script(src="/javascript/song.js", type='module') 
+

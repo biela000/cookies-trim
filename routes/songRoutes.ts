@@ -8,11 +8,11 @@ const router: Router = express.Router();
 router.route('/').patch(songController.updateAll);
 
 router.route('/favorite/:id')
-	.all(authController.protect)
-	.put(songController.toggleFavorite);
+    .all(authController.protect)
+    .put(songController.toggleFavorite);
 
 router.route('/stream/:name/:file')
-	.all(authController.protect)
-	.get(songController.streamSong);
+    .all(authController.protect)
+    .get(songController.streamSong);
 
 export default router;
