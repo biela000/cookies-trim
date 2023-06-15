@@ -17,10 +17,7 @@ const musicMenuOptions: { name: string, url: string }[] = [
     }
 ];
 
-export default {
-    login: catchAsync(async (req: Request, res: Response): Promise<void> => {
-        res.status(200).render('pages/login', { title: 'Login' });
-    }),
+export default { login: catchAsync(async (req: Request, res: Response): Promise<void> => { res.status(200).render('pages/login', { title: 'Login' }); }),
 
     musicFavoriteSongs: catchAsync(async (req: Request, res: Response): Promise<void> => {
         // Get all songs that are marked as favorite
@@ -63,30 +60,10 @@ export default {
             return;
         }
 
-        // Convert the song to HLS stream
-        const ffmpegInstance: ffmpeg.FfmpegCommand | null =
-            await SongUtils.convertSongToHlsStream(
-                song,
-                ffmpegOutputDirectory,
-                songDirectory
-            );
-
-        const renderSongPage = (): void => {
-            res.status(200).render('pages/song', {
-                song,
-                options: musicMenuOptions,
-            });
-        };
-
-        // If the ffmpeg instance is null, the song has already been converted to HLS stream
-        if (!ffmpegInstance) {
-            return renderSongPage();
-        }
-
-        // If the ffmpeg instance is not null, the song is being converted to HLS stream
-        ffmpegInstance.on('end', () => {
-            console.log('Finished processing');
-            renderSongPage();
+        res.status(200).render('pages/song', {
+            song,
+            ffmpegOutputDirectory,
+            songDirectory,
         });
     }),
 
