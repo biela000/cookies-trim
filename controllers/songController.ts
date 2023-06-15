@@ -91,13 +91,17 @@ export default {
             // Delete all songs in the database
             await Song.deleteMany({});
 
-            // Create a SongDocument for each song in the songs directory
-            const songDocuments: SongDocument[] =
-                await createSongDocumentsFromFilenames(songDirectory, filenames);
+            try {
+                // Create a SongDocument for each song in the songs directory
+                const songDocuments: SongDocument[] =
+                    await createSongDocumentsFromFilenames(songDirectory, filenames);
 
-            // Insert all SongDocuments into the database
-            // Inserting all SongDocuments at once is much faster than inserting them one by one
-            insertedSongs = await Song.insertMany(songDocuments);
+                // Insert all SongDocuments into the database
+                // Inserting all SongDocuments at once is much faster than inserting them one by one
+                insertedSongs = await Song.insertMany(songDocuments);
+            } catch (err) {
+                return next(new AppError('Could not create song documents from files', 500));
+            }
         } else {
             // If hard is false, only songs that are in the songs directory but not in the database
             // will be added to the database and only songs that are in the database but not in the songs directory
@@ -119,13 +123,18 @@ export default {
             // Delete all songs that are in the database but not in the songs directory
             Song.deleteMany({ filename: { $in: songsToDelete.map((song: SongDocument) => song.filename) } });
 
-            // Convert all songs to add to SongDocuments
-            const songDocuments: SongDocument[] =
-                await createSongDocumentsFromFilenames(songDirectory, songsToAdd);
+            try {
+                // Convert all songs to add to SongDocuments
+                const songDocuments: SongDocument[] =
+                    await createSongDocumentsFromFilenames(songDirectory, songsToAdd);
 
-            // Add all songs that are in the songs directory but not in the database
-            insertedSongs = await Song.insertMany(songDocuments);
+                // Add all songs that are in the songs directory but not in the database
+                insertedSongs = await Song.insertMany(songDocuments);
+            } catch (err) {
+                return next(new AppError('Could not create song documents from files', 500));
+            }
         }
+
 
         const numberOfSongsToConvert: number = insertedSongs.length;
         let numberOfConvertedSongs = 0;
