@@ -6,13 +6,28 @@ import path from 'path';
 
 const musicMenuOptions: { name: string, url: string }[] = [
     {
-        name: 'Favorite',
+        name: '[FAVORITE]',
         url: '/music/songs/favorite',
     },
     {
-        name: 'All Songs',
+        name: '[ALL]',
         url: '/music/songs',
     }
+];
+
+const musicSubmenuOptions: { name: string, url: string }[] = [
+    {
+        name: '[SONGS]',
+        url: '/music/songs',
+    },
+    {
+        name: '[ALBUMS]',
+        url: '/music/albums',
+    },
+    {
+        name: '[ARTISTS]',
+        url: '/music/artists',
+    },
 ];
 
 export default { login: catchAsync(async (req: Request, res: Response): Promise<void> => { res.status(200).render('pages/login', { title: 'Login' }); }),
@@ -23,8 +38,10 @@ export default { login: catchAsync(async (req: Request, res: Response): Promise<
 
         res.status(200).render('pages/music', {
             options: musicMenuOptions,
-            sectionTitle: 'Favorite Songs',
+            subOptions: musicSubmenuOptions,
+            sectionTitle: 'FAVORITE SONGS',
             items: favoriteSongs,
+            favorite: true,
         });
     }),
 
@@ -35,7 +52,8 @@ export default { login: catchAsync(async (req: Request, res: Response): Promise<
 
         res.status(200).render('pages/music', {
             options: musicMenuOptions,
-            sectionTitle: 'All Songs',
+            subOptions: musicSubmenuOptions,
+            sectionTitle: 'ALL SONGS',
             items: allSongs,
         });
     }),

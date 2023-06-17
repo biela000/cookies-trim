@@ -5,16 +5,23 @@ append styles
 
 block content
     header.header
-        .logo-container
-            h1.website-name Cookies
-        nav.options
-            li.menu-item
-                a.menu-item-link(href="/music") Music
-            li.menu-item
-                a.menu-item-link(href="/movies") Movies
-            li.menu-item
-                a.menu-item-link(href="/tv-shows") TV Shows
-        img.settings(src="/media/images/gear-solid.svg", alt="settings")
+        section.main-header
+            .logo-container
+                h1.website-name STUNT
+            nav.options
+                li.menu-item
+                    a.menu-item-link(href="/music") [MUSIC]
+                li.menu-item
+                    a.menu-item-link(href="/movies") [MOVIES]
+                li.menu-item
+                    a.menu-item-link(href="/tv-shows") [TV SHOWS]
+        section.aside-menus
+            block aside-menus
+                aside.aside-menu
+                    nav.menu-options
+                        block aside-menu-options
+                aside.aside-submenu
+                    nav.menu-options
+                        block aside-submenu-options
     section.main
-        block aside-menu
         block main-section

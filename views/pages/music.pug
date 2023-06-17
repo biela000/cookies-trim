@@ -3,12 +3,16 @@ extends ../templates/layout
 append styles
     link(rel='stylesheet', href='/stylesheets/music.css')
 
-block aside-menu
-    aside.aside-menu
-        nav.aside-menu-options
-            each option in options
-                li.aside-menu-item
-                    a.aside-menu-link(href= option.url) #{option.name}
+block aside-menu-options
+    each option in options
+        li.menu-item
+            a.menu-link(href= option.url) #{option.name}
+
+block aside-submenu-options
+    each option in subOptions
+        li.menu-item
+            - route = option.url + (favorite ? '/favorite' : '');
+            a.menu-link(href= route) #{option.name}
 
 block main-section
     section.main-section
@@ -16,27 +20,18 @@ block main-section
             h1.main-section-title= sectionTitle
             .main-section-options
                 .main-section-option-set.display-options
-                    button.main-section-option
-                        img.main-section-option-icon(src="/media/images/square-solid.svg", alt="picture")
-                    button.main-section-option
-                        img.main-section-option-icon(src="/media/images/list-solid.svg", alt="list")
-                .main-section-option-set.content-options
-                    button.main-section-option
-                        img.main-section-option-icon(src="/media/images/music-solid.svg", alt="songs")
-                    button.main-section-option
-                        img.main-section-option-icon(src="/media/images/album.png", alt="albums")
-                    button.main-section-option
-                        img.main-section-option-icon(src="/media/images/microphone-lines-solid.svg", alt="artists")
+                    button.main-section-option [grid_
+                    button.main-section-option [list_
                 .main-section-option-set.sort-options
                     select.sort-by-select(name="sort-by")
-                        option(value="plays") Plays
-                        option(value="title") Title
-                        option(value="artist") Artist
-                        option(value="album") Album
-                        option(value="date") Date
+                        option(value="plays") [plays_
+                        option(value="title") [title_
+                        option(value="artist") [artist_
+                        option(value="album") [album_
+                        option(value="date") [date_
                     select.sort-order-select(name="sort-order")
-                        option(value="descending") Descending
-                        option(value="ascending") Ascending
+                        option(value="descending") [descending_
+                        option(value="ascending") [ascending_
         main.main-section-content
             each item in items
                 .main-section-item(

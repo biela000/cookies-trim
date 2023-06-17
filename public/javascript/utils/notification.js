@@ -1,6 +1,6 @@
 export default class Notification {
     static notificationContainer = document.querySelector('.notifications');
-    static notifications = [];
+    static notificationTimeouts = [];
     static waitingNotifications = [];
     static notificationTime = 5000;
 
@@ -26,8 +26,15 @@ export default class Notification {
 
         const closeNotification = () => {
             this.notificationContainer.removeChild(notification);
-            this.notifications = this.notifications.filter(
-                (currentNotification) => currentNotification !== notification
+
+            const notificationTimeout = this.notificationTimeouts.find(
+                (notificationTimeout) => notificationTimeout.id === timeoutID
+            );
+
+            clearTimeout(notificationTimeout.timeout);
+
+            this.notificationTimeouts = this.notificationTimeouts.filter(
+                (notificationTimeout) => notificationTimeout.id !== timeoutID
             );
 
             if (this.waitingNotifications.length > 0) {
@@ -43,8 +50,12 @@ export default class Notification {
         notification.addEventListener('click', closeNotification);
 
         this.notificationContainer.appendChild(notification);
-        this.notifications.push(notification);
 
-        setTimeout(closeNotification, this.notificationTime);
+        const notificationTimeout = setTimeout(closeNotification, this.notificationTime);
+        const timeoutID = Date.now() + Math.floor(Math.random() * 1000000);
+        this.notificationTimeouts.push({
+            id: timeoutID,
+            timeout: notificationTimeout
+        });
     }
 }

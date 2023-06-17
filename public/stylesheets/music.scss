@@ -1,56 +1,22 @@
 @use 'config' as *;
 
-.aside-menu {
-	color: $background;
-	border-radius: $small;
-	padding: $small;
-	width: max-content;
-	display: flex;
-	flex-direction: column;
-	gap: $small;
-
-	.aside-menu-options {
-		.aside-menu-item {
-			display: flex;
-			align-items: center;
-			gap: $small;
-			padding: $tiny;
-			border-radius: $tiny;
-			transition: background-color 0.2s ease-in-out;
-			cursor: pointer;
-
-			&:hover {
-				background-color: lighten($tertiary-accent, 10%);
-			}
-
-			&.active {
-				background-color: lighten($tertiary-accent, 20%);
-			}
-
-			.menu-item-icon {
-				font-size: $medium;
-			}
-
-			.aside-menu-link {
-				font-weight: 300;
-				color: $background;
-				text-decoration: none;
-			}
-		}
-	}
-}
-
 .main-section {
 	width: 100%;
 
 	.main-section-header {
 		display: flex;
-		justify-content: space-between;
 		align-items: center;
+        gap: $xlarge;
 
 		.main-section-title {
 			font-size: $medium;
 			font-weight: 700;
+            padding: $tiny 0;
+            border-bottom: {
+                width: 1px;
+                style: solid;
+                color: $foreground;
+            };
 		}
 
 		.main-section-options {
@@ -63,31 +29,32 @@
 				align-items: center;
 				gap: $tiny;
 				padding: $tiny;
-				border-radius: $tiny;
-				background-color: $tertiary-accent;
+                border: {
+                    width: 1px;
+                    style: solid;
+                    color: $foreground;
+                };
 				width: max-content;
 				height: $large;
 
 				.main-section-option {
-					background-color: transparent;
+                    cursor: pointer;
+                    background-color: $background;
 					height: 100%;
-					display: grid;
-					place-items: center;
+                    font-size: $small;
 					border: none;
-					width: $medium;
 
-					.main-section-option-icon {
-						width: 100%;
-						cursor: pointer;
-					}
+                    &:hover {
+                        text-decoration: underline;
+                    }
 				}
 
 				.sort-by-select, .sort-order-select {
-					background-color: $tertiary-accent;
+                    cursor: pointer;
+					background-color: $background;
 					border: none;
-					height: $large;
-					color: $background;
 					font-size: $small;
+                    height: 100%;
 				}
 			}
 		}
@@ -96,25 +63,28 @@
 	.main-section-content {
 		padding-top: $small;
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
 		gap: $small;
 
 		.main-section-item {
 			line-height: 1.2;
-			color: $background;
-			border-radius: $small;
+            height: 22.5rem;
 			padding: $small;
-			background-color: $tertiary-accent;
 			transition: background-color 0.2s ease-in-out;
 			cursor: pointer;
 			position: relative;
+            border: {
+                width: 1px;
+                style: solid;
+                color: $foreground;
+            };
 
 			&:hover {
-				background-color: lighten($tertiary-accent, 10%);
+                text-decoration: underline;
 
-				.main-section-item-favorite-icon {
-					display: block;
-				}
+                .main-section-item-favorite-icon {
+                    display: block;
+                }
 			}
 
 			.main-section-item-heading {
@@ -124,16 +94,14 @@
 
 			.main-section-item-image {
 				width: 100%;
-				background-color: $tertiary-accent;
-				border-radius: $small;
 				margin-bottom: $tiny;
 			}
 
 			.main-section-item-favorite-icon {
 				display: none;
 				position: absolute;
-				top: $small + $tiny;
-				right: $small + $tiny;
+				bottom: $small + $tiny;
+				left: $small + $tiny;
 				width: $medium;
 			}
 		}

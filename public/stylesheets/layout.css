@@ -1,17 +1,74 @@
-/* Error: Undefined variable.
- *   ,
- * 7 |     background-color: $tertiary-accent;
- *   |                       ^^^^^^^^^^^^^^^^
- *   '
- *   public/stylesheets/layout.scss 7:20  root stylesheet */
-
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: Undefined variable.\a   \2577 \a 7 \2502      background-color: $tertiary-accent;\a   \2502                        ^^^^^^^^^^^^^^^^\a   \2575 \a   public/stylesheets/layout.scss 7:20  root stylesheet";
+.header {
+  display: flex;
 }
+.header .main-header {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  width: max-content;
+  border-right-width: 1px;
+  border-right-style: solid;
+  border-right-color: rgb(1, 5, 2);
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgb(1, 5, 2);
+}
+.header .main-header .logo-container {
+  font-size: 3rem;
+  font-weight: 700;
+}
+.header .main-header .options {
+  display: flex;
+  justify-content: space-between;
+  width: max-content;
+  gap: 3rem;
+  list-style: none;
+}
+.header .main-header .options .menu-item .menu-item-link {
+  color: rgb(1, 5, 2);
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+.header .main-header .options .menu-item .menu-item-link:hover {
+  text-decoration: underline;
+}
+.header .aside-menus {
+  flex-grow: 1;
+}
+.header .aside-menus .aside-menu, .header .aside-menus .aside-submenu {
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgb(1, 5, 2);
+  height: 50%;
+}
+.header .aside-menus .aside-menu .menu-options, .header .aside-menus .aside-submenu .menu-options {
+  width: 100%;
+  display: flex;
+}
+.header .aside-menus .aside-menu .menu-options .menu-item, .header .aside-menus .aside-submenu .menu-options .menu-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.header .aside-menus .aside-menu .menu-options .menu-item .menu-link, .header .aside-menus .aside-submenu .menu-options .menu-item .menu-link {
+  font-weight: 400;
+  color: rgb(1, 5, 2);
+  text-decoration: none;
+}
+.header .aside-menus .aside-menu .menu-options .menu-item .menu-link:hover, .header .aside-menus .aside-submenu .menu-options .menu-item .menu-link:hover {
+  text-decoration: underline;
+}
+
+.main {
+  padding: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+/*# sourceMappingURL=layout.css.map */

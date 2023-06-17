@@ -1,42 +1,96 @@
 @use 'config' as *;
 
 .header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	background-color: $tertiary-accent;
-	padding: $small;
-	color: $background;
+    display: flex;
 
-	.logo-container {
-		font-size: $large;
-		font-weight: 700;
-	}
+    .main-header {
+        display: flex;
+        flex-direction: column;
+        padding: $medium;
+        width: max-content;
+        border: {
+            right: {
+                width: 1px;
+                style: solid;
+                color: $foreground;
+            };
+            bottom: {
+                width: 1px;
+                style: solid;
+                color: $foreground;
+            };
+        };
 
-	.options {
-		display: flex;
-		justify-content: space-between;
-		width: max-content;
-		gap: $large;
-		list-style: none;
+        .logo-container {
+            font-size: $large;
+            font-weight: 700;
+        }
 
-		.menu-item {
-			.menu-item-link {
-				color: $background;
-				text-decoration: none;
-				font-size: $small * 1.5;
-				font-weight: 500;
-			}
-		}
-	}
+        .options {
+            display: flex;
+            justify-content: space-between;
+            width: max-content;
+            gap: $large;
+            list-style: none;
 
-	.settings {
-		width: $large;
-	}
+            .menu-item {
+                .menu-item-link {
+                    color: $foreground;
+                    text-decoration: none;
+                    font-size: $small * 1.5;
+                    font-weight: 400;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+
+    .aside-menus {
+        flex-grow: 1;
+
+        .aside-menu, .aside-submenu {
+            padding: $small;
+            display: flex;
+            gap: $small;
+            border-bottom: {
+                width: 1px;
+                style: solid;
+                color: $foreground;
+            };
+            height: 50%;
+
+            .menu-options {
+                width: 100%;
+                display: flex;
+
+                .menu-item {
+                    display: flex;
+                    align-items: center;
+                    gap: $small;
+                    padding: $tiny;
+                    cursor: pointer;
+
+                    .menu-link {
+                        font-weight: 400;
+                        color: $foreground;
+                        text-decoration: none;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 .main {
 	padding: $medium;
 	display: flex;
 	gap: $small;
+
 }

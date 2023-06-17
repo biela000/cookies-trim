@@ -1,17 +1,89 @@
-/* Error: Undefined variable.
- *    ,
- * 23 |                 background-color: lighten($tertiary-accent, 10%);
- *    |                                           ^^^^^^^^^^^^^^^^
- *    '
- *   public/stylesheets/music.scss 23:31  root stylesheet */
-
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: Undefined variable.\a    \2577 \a 23 \2502                  background-color: lighten($tertiary-accent, 10%);\a    \2502                                            ^^^^^^^^^^^^^^^^\a    \2575 \a   public/stylesheets/music.scss 23:31  root stylesheet";
+.main-section {
+  width: 100%;
 }
+.main-section .main-section-header {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+.main-section .main-section-header .main-section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 0.5rem 0;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgb(1, 5, 2);
+}
+.main-section .main-section-header .main-section-options {
+  display: flex;
+  gap: 4rem;
+  align-items: center;
+}
+.main-section .main-section-header .main-section-options .main-section-option-set {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(1, 5, 2);
+  width: max-content;
+  height: 3rem;
+}
+.main-section .main-section-header .main-section-options .main-section-option-set .main-section-option {
+  cursor: pointer;
+  background-color: rgb(252, 252, 252);
+  height: 100%;
+  font-size: 1rem;
+  border: none;
+}
+.main-section .main-section-header .main-section-options .main-section-option-set .main-section-option:hover {
+  text-decoration: underline;
+}
+.main-section .main-section-header .main-section-options .main-section-option-set .sort-by-select, .main-section .main-section-header .main-section-options .main-section-option-set .sort-order-select {
+  cursor: pointer;
+  background-color: rgb(252, 252, 252);
+  border: none;
+  font-size: 1rem;
+  height: 100%;
+}
+.main-section .main-section-content {
+  padding-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: 1rem;
+}
+.main-section .main-section-content .main-section-item {
+  line-height: 1.2;
+  height: 22.5rem;
+  padding: 1rem;
+  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
+  position: relative;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(1, 5, 2);
+}
+.main-section .main-section-content .main-section-item:hover {
+  text-decoration: underline;
+}
+.main-section .main-section-content .main-section-item:hover .main-section-item-favorite-icon {
+  display: block;
+}
+.main-section .main-section-content .main-section-item .main-section-item-heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.main-section .main-section-content .main-section-item .main-section-item-image {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.main-section .main-section-content .main-section-item .main-section-item-favorite-icon {
+  display: none;
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  width: 2rem;
+}
+
+/*# sourceMappingURL=music.css.map */
