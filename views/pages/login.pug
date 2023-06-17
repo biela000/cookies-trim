@@ -5,18 +5,19 @@ append styles
 
 block content
     header.header
-        h1.main-heading Welcome to CookiesTrim &#127850;
-        h2.sub-heading Login to your account
+        h1.main-heading STUNT
+        h2.sub-heading [LET 1=1; DROP TABLE obecnosc;]
     main.main
         form.login-form
             mixin input-container(label, type, name, id)
                 .input-container
                     label.input-label(for=id)= label
                     input.input(type=type, name=name, id=id)&attributes(attributes)
-            img.profile-picture(src="/media/images/monster-pfp.jpg", alt="cookie monster")
-            +input-container('Username', 'text', 'username', 'username')(class='username-input', placeholder='(name)')
-            +input-container('Password', 'password', 'password', 'password')(class='password-input', placeholder='(pass)')
-            button.login-submit-btn(type="submit") Login
+            section.matrix-container
+                section.matrix
+            +input-container('[USERNAME]', 'text', 'username', 'username')(class='username-input', placeholder='_name_')
+            +input-container('[PASSWORD]', 'password', 'password', 'password')(class='password-input', placeholder='_pass_')
+            button.login-submit-btn(type="submit") [login_
 
 append scripts
     script(src="/javascript/login.js", type='module')

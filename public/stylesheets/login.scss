@@ -4,54 +4,85 @@
 	gap: $large;
 
 	.header {
-		background-color: $tertiary-accent;
-		color: $background;
-		padding: $medium $xlarge;
-		border-radius: $small;
 		width: max-content;
 		margin: {
-			top: $small;
+			top: $large;
 			right: auto;
 			left: auto;
 		};
 		line-height: 1.3;
+        text-align: center;
 
 		.main-heading {
 			font-size: $large;
-			font-weight: 500;
+			font-weight: 700;
 		}
 
 		.sub-heading {
 			font-size: $medium;
-			font-weight: 300;
+			font-weight: 400;
 		}
 	}
 
 	.main {
-		width: max-content;
-		margin: auto;
-		background-color: $tertiary-accent;
-		color: $background;
-		border-radius: $small;
 		padding: $medium;
+        min-width: 30rem;
+        width: 20%;
+        margin: auto;
 
 		.login-form {
 			@include centered-column-flex;
 			gap: $small;
+            width: 100%;
 
-			.profile-picture {
-				width: 90%;
-				border-radius: 50%;
-				border: lighten($dark-accent, 10%) solid calc($tiny / 2);
-			}
+            .matrix-container {
+                @include centered-column-flex;
+                justify-content: center;
+                width: $medium * 7;
+                height: $medium * 7;
+                position: relative;
 
+                .matrix {
+				    width: $medium * 6;
+                    height: $medium * 6;
+                    font-size: $medium;
+                    overflow: hidden;
+                    word-wrap: break-word;
+			    }
+
+                &::before, &::after {
+                    content: '';
+                    position: absolute;
+                    width: 20%;
+                    height: 20%;
+                }
+
+                &::before {
+                    top: 0;
+                    left: 0;
+                    border: {
+                        top: $tiny solid $primary-accent;
+                        left: $tiny solid $primary-accent;
+                    }
+                }
+
+                &::after {
+                    bottom: 0;
+                    right: 0;
+                    border: {
+                        bottom: $tiny solid $primary-accent;
+                        right: $tiny solid $primary-accent;
+                    }
+                }
+            }
+			
 			.input-container {
 				@include centered-column-flex;
 				gap: $tiny;
 
 				.input-label {
 					font-size: $small * 1.5;
-					font-weight: 300;
+					font-weight: 400;
 				}
 
 				.input {
@@ -85,12 +116,19 @@
 		.main {
 			padding: $medium $small;
 			width: fit-content;
+            min-width: 10rem;
 
 			.login-form {
-				.profile-picture {
-					width: 100%;
-				}
+                .matrix-container {
+                    width: $medium * 5;
+                    height: $medium * 5;
 
+                    .matrix {
+                        font-size: $small;
+                        width: $medium * 4;
+                        height: $medium * 4;
+                    }
+                }
 				.input-container {
 					.input-label {
 						font-size: $small;

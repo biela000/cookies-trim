@@ -1,36 +1,17 @@
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #a1683a;
-  padding: 1rem;
-  color: #fbf7f4;
-}
-.header .logo-container {
-  font-size: 3rem;
-  font-weight: 700;
-}
-.header .options {
-  display: flex;
-  justify-content: space-between;
-  width: max-content;
-  gap: 3rem;
-  list-style: none;
-}
-.header .options .menu-item .menu-item-link {
-  color: #fbf7f4;
-  text-decoration: none;
-  font-size: 1.5rem;
-  font-weight: 500;
-}
-.header .settings {
-  width: 3rem;
-}
+/* Error: Undefined variable.
+ *   ,
+ * 7 |     background-color: $tertiary-accent;
+ *   |                       ^^^^^^^^^^^^^^^^
+ *   '
+ *   public/stylesheets/layout.scss 7:20  root stylesheet */
 
-.main {
-  padding: 2rem;
-  display: flex;
-  gap: 1rem;
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: Undefined variable.\a   \2577 \a 7 \2502      background-color: $tertiary-accent;\a   \2502                        ^^^^^^^^^^^^^^^^\a   \2575 \a   public/stylesheets/layout.scss 7:20  root stylesheet";
 }
-
-/*# sourceMappingURL=layout.css.map */

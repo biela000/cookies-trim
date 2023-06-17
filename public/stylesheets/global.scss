@@ -7,6 +7,10 @@ html {
     color: $foreground;
 }
 
+* {
+    font-family: $font-family;
+}
+
 em {
     font-style: italic;
 }
@@ -15,40 +19,78 @@ em {
     display: flex;
     flex-direction: column;
 
-    .notification {
+    .notifications {
         position: absolute;
-        width: max-content;
-        right: $small;
-        color: $background;
-        border-radius: $small;
-        padding: $medium;
-        transition: top 0.2s ease-in-out, opacity 0.2s ease-in-out, background-color 0.2s ease-in-out;
-        opacity: 0;
-        pointer-events: none;
-        top: -$xlarge - $small;
+        right: 0;
+        width: 20%;
+        height: 100%;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        gap: $small;
+        padding: $small;
+        overflow: hidden;
 
-        &.show {
-            opacity: 1;
-            pointer-events: auto;
-            top: $small;
+        .notification-template {
+            display: none;
         }
 
-        &.success {
-            background-color: $success;
-        }
+        .notification {
+            background-color: $primary-accent;
+            right: $small;
+            color: $background;
+            padding: $medium;
+            position: relative;
 
-        &.error {
-            background-color: $error;
-        }
+            &.success {
+                .notification-title {
+                    color: $success;
+                }
+                
+                &::before {
+                    background-color: $success;
+                }
+            }
 
-        .title {
-            font-size: $medium;
-            font-weight: 500;
-        }
+            &.error {
+                .notification-title {
+                    color: $error;
+                }
 
-        .description {
-            font-size: $small;
-            font-weight: 300;
+                &::before {
+                    background-color: $error;
+                }
+            }
+
+            .notification-title {
+                font-size: $medium;
+                font-weight: 700;
+            }
+
+            .notification-message {
+                font-size: $small;
+                font-weight: 400;
+            }
+
+            &::before {
+                content: '';
+                position: absolute;
+                height: $tiny;
+                bottom: 0;
+                left: 0;
+                animation: notification-timer 5s linear forwards;
+
+                @keyframes notification-timer {
+                    0% {
+                        width: 100%;
+                    }
+
+                    100% {
+                        width: 0;
+                    }
+                }
+            }
         }
     }
+
 }

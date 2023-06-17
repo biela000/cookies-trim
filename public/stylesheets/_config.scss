@@ -1,25 +1,21 @@
 // Colors
-$rich-black: #0d1821ff;
-$coral: #ef8354ff;
-$raspberry-rose: #a53860ff;
-$isabelline: #fbf7f4ff;
-$raw-umber: #a1683aff;
-$asparagus: #60992dff;
+$white: rgba(252, 252, 252, 1);
+$black: rgba(1, 5, 2, 1);
+$dim-gray: rgba(107, 109, 118, 1);
+$mint: rgba(82, 183, 136, 1);
+$chili-red: rgba(214, 73, 51, 1);
 
 // Page color aliases
-$primary-accent: $coral;
-$secondary-accent: $raspberry-rose;
-$tertiary-accent: $raw-umber;
-$dark-accent: $rich-black;
-$background: $isabelline;
-$foreground: #131313ff;
+$primary-accent: $black;
+$secondary-accent: $dim-gray;
+$background: $white;
+$foreground: $black;
 
-$error: $raspberry-rose;
-// Success should be a nice green color fitting with the theme
-$success: $asparagus;
+$error: $chili-red;
+$success: $mint;
 
 // Font
-$font-family: 'Roboto', sans-serif;
+$font-family: 'Courier Prime', monospace;
 $font-size: 16px;
 
 // Size aliases
@@ -40,22 +36,17 @@ $xlarge: 4rem;
 @mixin input {
 	width: 100%;
 	padding: $tiny;
-	border-radius: $tiny;
-	border: none;
+    border: none;
+    border-bottom: 1px solid $primary-accent;
 	font-size: $small;
-	font-weight: 300;
-	background-color: lighten($tertiary-accent, 30%);
+	font-weight: 400;
 	color: $foreground;
+    background-color: $background;
 	text-align: center;
 	outline: none;
-	transition: background-color 0.2s ease-in-out;
-
-	&::placeholder {
-		font-style: italic;
-	}
 
 	&:focus {
-		background-color: lighten($tertiary-accent, 20%);
+        border-bottom: 1px solid $secondary-accent;
 
 		&::placeholder {
 			color: transparent;
@@ -65,11 +56,10 @@ $xlarge: 4rem;
 
 @mixin button {
 	padding: $tiny;
-	border-radius: $tiny;
 	border: none;
 	font-size: $small;
-	font-weight: 300;
-	background-color: lighten($dark-accent, 10%);
+	font-weight: 400;
+	background-color: $primary-accent;
 	color: $background;
 	padding: {
 		top: $tiny;
@@ -81,4 +71,8 @@ $xlarge: 4rem;
 	outline: none;
 	transition: background-color 0.2s ease-in-out;
 	cursor: pointer;
+
+    &:active {
+        background-color: $secondary-accent;
+    }
 }
