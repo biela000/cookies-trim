@@ -5,7 +5,9 @@ import authController from '../controllers/authController';
 const router: Router = express.Router();
 
 // This needs to be protected later but for now it's fine
-router.route('/').patch(songController.updateAll);
+router.route('/')
+    .get(songController.getAll)
+    .patch(songController.updateAll);
 
 router.route('/favorite/:id')
     .all(authController.protect)

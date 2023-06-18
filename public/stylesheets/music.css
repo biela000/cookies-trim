@@ -85,5 +85,8 @@
   left: 1.5rem;
   width: 2rem;
 }
+.main-section .main-section-template {
+  display: none;
+}
 
 /*# sourceMappingURL=music.css.map */

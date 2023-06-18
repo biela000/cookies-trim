@@ -4,18 +4,18 @@ import Song, { SongDocument } from '../models/songModel';
 import Settings from '../Settings';
 import path from 'path';
 
-const musicMenuOptions: { name: string, url: string }[] = [
+const musicSubmenuOptions: { name: string, url: string }[] = [
     {
         name: '[FAVORITE]',
-        url: '/music/songs/favorite',
+        url: '?favorite=true',
     },
     {
         name: '[ALL]',
-        url: '/music/songs',
+        url: '?',
     }
 ];
 
-const musicSubmenuOptions: { name: string, url: string }[] = [
+const musicMenuOptions: { name: string, url: string }[] = [
     {
         name: '[SONGS]',
         url: '/music/songs',
@@ -94,6 +94,6 @@ export default { login: catchAsync(async (req: Request, res: Response): Promise<
 
     musicHome: catchAsync(async (req: Request, res: Response): Promise<void> => {
         // Redirect to the favorite songs page
-        res.status(308).redirect('/music/songs/favorite');
+        res.status(308).redirect('/music/songs?favorite=true');
     }),
 };

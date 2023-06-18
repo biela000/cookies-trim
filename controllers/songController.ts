@@ -41,7 +41,15 @@ export default {
     getAll: catchAsync(async (req: Request, res: Response): Promise<void> => {
         // TODO: Allow filtering and sorting results by query parameters
         // Get all songs from the database
-        const songs: SongDocument[] = await Song.find({});
+        const { favorite } = req.query;
+        
+        let songs: SongDocument[];
+
+        if (favorite === 'true') {
+            songs = await Song.find({ favorite: true });
+        } else {
+            songs = await Song.find({});
+        }
 
         res.status(200).json({
             status: 'success',
@@ -134,7 +142,6 @@ export default {
                 return next(new AppError('Could not create song documents from files', 500));
             }
         }
-
 
         const numberOfSongsToConvert: number = insertedSongs.length;
         let numberOfConvertedSongs = 0;

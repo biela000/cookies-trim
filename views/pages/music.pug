@@ -6,13 +6,12 @@ append styles
 block aside-menu-options
     each option in options
         li.menu-item
-            a.menu-link(href= option.url) #{option.name}
+            a.menu-link(href= option.url, data-path= option.url) #{option.name}
 
 block aside-submenu-options
     each option in subOptions
         li.menu-item
-            - route = option.url + (favorite ? '/favorite' : '');
-            a.menu-link(href= route) #{option.name}
+            a.menu-link(href= option.url, data-path= option.url) #{option.name}
 
 block main-section
     section.main-section
@@ -27,31 +26,25 @@ block main-section
                         option(value="plays") [plays_
                         option(value="title") [title_
                         option(value="artist") [artist_
-                        option(value="album") [album_
                         option(value="date") [date_
                     select.sort-order-select(name="sort-order")
                         option(value="descending") [descending_
                         option(value="ascending") [ascending_
         main.main-section-content
-            each item in items
-                .main-section-item(
-                    data-db-id=item._id,
-                    data-is-favorite=item.favorite.toString()
+        .main-section-template
+            .main-section-element-template.main-section-item(
+                data-db-id='{{id}}',
+                data-is-favorite='{{favorite}}'
+            )
+                img.main-section-item-image(
+                    src='{{imgSrc}}',
+                    alt='{{title}}'
                 )
-                    -
-                        let imgSrc = '/media/images/unknown.png';
-                        if (item.cover && item.cover.length > 0 && item.cover[0].data) {
-                            imgSrc = 'data:image/jpeg;base64,' + item.cover[0].data.toString('base64');
-                        }
-                    img.main-section-item-image(
-                        src=imgSrc,
-                        alt=item.title
-                    )
-                    h2.main-section-item-heading= item.title
-                    p.main-section-item-album
-                        em.main-section-item-album-text= item.album
-                    p.main-section-item-description= item.artist
-                    img.main-section-item-favorite-icon(src="/media/images/heart-solid.svg", alt="favorite")
+                h2.main-section-item-heading {{title}}
+                p.main-section-item-album
+                    em.main-section-item-album-text {{album}}
+                p.main-section-item-description {{artist}}
+                img.main-section-item-favorite-icon(src="/media/images/heart-solid.svg", alt="favorite")
 
 append scripts
     script(src="/javascript/music.js", type='module')
